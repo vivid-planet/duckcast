@@ -17,7 +17,7 @@ var messageClient = messenger.createSpeaker(3802)
   , config = fs.readFileSync('./settings.json', 'utf8');
 
 config = JSON.parse(config);
-config.domain = config.domain ? config.domain : 'http://'+os.hostname();
+config.domain = config.domain ? config.domain : os.hostname();
 
 app.setMaxListeners(1000);
 server.setMaxListeners(1000);
@@ -147,7 +147,8 @@ app.get('/*', function(req, res, next){
           
         messageClient.shout('lastRequest', path);
 
-        fs.writeFile('./settings.json', JSON.stringify(config), function(err){
+        var toWrite = _.omit(config, 'domain');
+        fs.writeFile('./settings.json', JSON.stringify(toWrite), function(err){
             if(err){
                 console.error(err);
             }
