@@ -21,25 +21,9 @@ config.domain = config.domain ? config.domain : 'http://'+os.hostname();
 
 app.setMaxListeners(1000);
 server.setMaxListeners(1000);
-
+server.listen(config.proxyPort);
 
 var request = request.defaults({timeout: 30000}) // CONFIG TO TIMEOUT REQUEST
-
-io.configure(function(){
-  io.enable('browser client etag');
-    io.set('transports', [
-    'websocket'
-  , 'flashsocket'
-  , 'htmlfile'
-  , 'xhr-polling'
-  , 'jsonp-polling'
-  ]);
-  io.set('log level', 2);
-  io.set('authorization', function (handshakeData, callback) {
-      handshakeData.type = 'testling';
-      callback(null, true);
-  })
-});
 
 app.configure(function(){
     app.use(express.favicon());
@@ -50,9 +34,6 @@ app.configure(function(){
     app.use(express.cookieParser());
     app.use(express.bodyParser({ keepExtensions: true, uploadDir: __dirname+'/temp' }));
 })
-
-
-server.listen(config.proxyPort);
 
 var duckScript = fs.readFileSync('./script.txt', 'utf8');
 
@@ -110,6 +91,7 @@ io.sockets.on('connection', function (socket) {
     messageClient.shout('devices', {type: 'create', data: connectType});
 
     socket.on('disconnect', function(){
+        console.log(socket.id);
         messageClient.shout('devices', {
           type: 'delete'
           , socketUri: 'duckcast/'+socket.id+':delete'
@@ -205,6 +187,7 @@ messageServer.on('changedSettings', function(m, data){
 })
 
 messageServer.on('manageDevice', function(m, data){
+  console.log('manageDevice', data.id);
   io.sockets.socket(data.id).emit('manage', data);
 })
 
