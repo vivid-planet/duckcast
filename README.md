@@ -7,12 +7,12 @@ Node application to stream websites to multiple browsers
 
 Requires Node ~0.10.x and NPM (Node Package Manager)
 
-Installation:
+##Installation:
     npm install
     
-Run the script
+##Run the script
   node duckcast 
   
-or use forever
+##Use Forever
   sudo npm install forever -g
   forever start -w duckcast.js
