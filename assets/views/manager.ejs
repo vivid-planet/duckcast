@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Duckcast - Codename: Baby</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/css/screen.css">
+    </head>
+    <body>
+        <div id="mainContent">
+            <div id="outerContent">
+                <div id="content">
+                    <div class="sidebar">
+                        <div id="logo">
+                            <img src="/images/duckCastLogo.png">
+                        </div>
+                        <hr>
+                        <h4>Proxy Site Settings</h4>
+                        <form id="setSite">
+                            <div class="row">
+                                <label>Site <small>(example: http://vivid-planet.com/agentur/vivid_planet)</small></label>
+                                <input name="site" value="<%= content.site %>">
+                            </div>
+                            <div class="row">
+                                <button class="submitButton" type="submit">Save</button>
+                            </div>
+                        </form>
+                        <hr>
+                        <h4>Domain / Port Settings</h4>
+                        <form id="setDomain">
+                            <div class="row">
+                                <label>Domain <small>(Important: ONLY FIRST LEVEL DOMAIN)</small></label>
+                                <input name="domain" value="<%= content.domain %>">
+                            </div>
+                            <div class="row">
+                                <label>Public (Proxy) Port</label>
+                                <input name="proxyPort" value="<%= content.proxyPort %>">
+                            </div>
+                            <div class="row">
+                                <label>Manager (Admin) Port</label>
+                                <input name="managerPort" value="<%= content.managerPort %>">
+                            </div>
+                            <div class="row">
+                                <p class="info">
+                                    Important: Changes here results in updating every device manualy! Port and Domain changes cannot be streamed!
+                                </p>
+                            </div>
+                            <div class="row">
+                                <button class="submitButton" type="submit">Save</button>
+                            </div>
+                        </form>
+                        <hr>
+                        <div class="row">
+                            <label>Active Deep Link</label>
+                            <input name="lastRequest" value ="<%= content.lastRequest %>" readonly>
+                        </div>
+                        <hr>
+                        <button class="restart" data-service="proxy">Restart Proxy</button>
+                        <button class="restart" data-service="manager">Restart Manager</button>
+                        <hr>
+                        <button class="reloadStylesheets">Reload Stylesheets</button>
+                        
+                    </div>
+                    <div class="main">
+                        <ul class="deviceList"></ul>
+                    </div>
+                    <div class="logs">
+                        <button class="clearLog">Clear Log</button>
+                        <ul class="logentry"></ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <script src="/js/socket.io.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="/js/jquery.js"><\/script>')</script>
+        <script src="/js/underscore.js"></script>
+        <script src="/js/backbone.js"></script>
+        <script src="/js/backbone.iosync.js"></script>
+        <script src="/js/backbone.iobind.js"></script>
+        <script src="/js/plugins.js"></script>
+        <script src="/js/main.js"></script>
+    </body>
+</html>

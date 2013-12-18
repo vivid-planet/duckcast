@@ -1,0 +1,169 @@
+
+@import "compass/reset";
+@import "compass/css3/box-sizing";
+html {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    height: 100%;
+    width: 100%;
+    font-family: sans-serif;
+    overflow: hidden;
+}
+
+#mainContent {
+    height: 100%;
+    width: 100%;
+    background: #333;
+    color: #FFF;
+
+    #outerContent {
+        width: 100%;
+        height: 100%;
+        display: inline-block;
+        #content {
+            height: 100%;
+            .sidebar {
+                width: 30%;
+                height: 100%;
+                background: none repeat scroll 0 0 #A9A9A9;
+                float: left;
+                color: #FFF;
+                padding: 10px;
+                overflow-x:hidden;
+                @include box-sizing(border-box);
+                box-shadow: 1px 0 10px #000;
+
+                h4 {
+                    font-weight: bold;
+                    text-transform: uppercase;
+                }
+
+                button {
+                    background: none repeat scroll 0 0 #666666;
+                    border: 1px solid #333333;
+                    color: #FFFFFF;
+                    padding: 3px 10px;
+                    cursor: pointer;
+                }
+
+                #logo {
+                    position: relative;
+                    width: 100%;
+                    img {
+                        width: 90%;
+                    }
+                }
+
+                .row {
+                    margin: 10px 0;
+                    label {
+                        display: block;
+                        font-size: 14px;
+                        text-transform: uppercase;
+                        small {
+                            font-size: 10px;
+                            color: palegoldenrod;
+                            text-transform: lowercase;
+                        }
+                    }
+                    input {
+                        width: 90%;
+                        background: #ebebeb;
+                        border: 1px solid #ccc;
+                        padding: 4px;
+                        margin: 2px 0;
+                    }
+                }
+            }
+            .logs {
+                background: none repeat scroll 0 0 #666666;
+                color: #E3CC3A;
+                float: right;
+                font-family: monospace;
+                font-weight: 100;
+                height: 35%;
+                overflow: hidden;
+                padding: 1%;
+                width: 70%;
+                bottom: 0;
+                position: relative;
+                display: inline-block;
+                @include box-sizing(border-box);
+                .logentry {
+                    height: 95%;
+                    overflow-x: hidden;
+                    overflow-y: auto;
+                    width: 100%;
+                    li {
+                        margin: 2px 0;
+                        span.date {
+                            color: tomato;
+                        }                    
+                    }
+                }
+
+                .clearLog {
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    z-index: 1;
+                    background: green;
+                    border: 1px solid #333333;
+                    color: #FFFFFF;
+                    margin-top: 0;
+                    padding: 5px 10px;
+                    cursor:pointer;
+                }
+            }
+
+            .main {
+                width: 70%;
+                height: 65%;
+                float: right;
+                padding: 1%;
+                @include box-sizing(border-box);
+                overflow-x:hidden;
+                position:relative;
+                .deviceList {
+                    .device {
+                        float: left;
+                        margin: 5px;
+                        text-align: center;
+                        span {
+                            display: block;
+                            font-size: 14px;
+                            text-transform: uppercase;
+                            margin: 3px 0;
+                        }
+                        a {
+                            color: #E7CE4A;
+                            font-size: 12px;
+                            text-decoration: none;
+                        }
+
+                        .submenu {
+                            background: none repeat scroll 0 0 #FFFFFF;
+                            border: 1px solid;
+                            padding: 5px;
+                            position: absolute;
+                            text-align: left;
+                            width: 150px;
+                            box-shadow: 1px 0 10px #000000;
+                            a {
+                                color: #333;
+                                font-size: 12px;
+                                text-decoration: none;
+                                display: block;
+                                width: 100%;
+                                line-height: 18px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

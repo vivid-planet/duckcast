@@ -1,0 +1,252 @@
+/* line 17, ../../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+/* line 22, ../../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+html {
+  line-height: 1;
+}
+
+/* line 24, ../../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 26, ../../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 28, ../../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+/* line 30, ../../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none;
+}
+/* line 103, ../../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+/* line 32, ../../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none;
+}
+
+/* line 116, ../../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
+  display: block;
+}
+
+/* line 4, ../sass/screen.scss */
+html {
+  height: 100%;
+  width: 100%;
+}
+
+/* line 9, ../sass/screen.scss */
+body {
+  height: 100%;
+  width: 100%;
+  font-family: sans-serif;
+  overflow: hidden;
+}
+
+/* line 16, ../sass/screen.scss */
+#mainContent {
+  height: 100%;
+  width: 100%;
+  background: #333;
+  color: #FFF;
+}
+/* line 22, ../sass/screen.scss */
+#mainContent #outerContent {
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+}
+/* line 26, ../sass/screen.scss */
+#mainContent #outerContent #content {
+  height: 100%;
+}
+/* line 28, ../sass/screen.scss */
+#mainContent #outerContent #content .sidebar {
+  width: 30%;
+  height: 100%;
+  background: none repeat scroll 0 0 #A9A9A9;
+  float: left;
+  color: #FFF;
+  padding: 10px;
+  overflow-x: hidden;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  box-shadow: 1px 0 10px #000;
+}
+/* line 39, ../sass/screen.scss */
+#mainContent #outerContent #content .sidebar h4 {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+/* line 44, ../sass/screen.scss */
+#mainContent #outerContent #content .sidebar button {
+  background: none repeat scroll 0 0 #666666;
+  border: 1px solid #333333;
+  color: #FFFFFF;
+  padding: 3px 10px;
+  cursor: pointer;
+}
+/* line 52, ../sass/screen.scss */
+#mainContent #outerContent #content .sidebar #logo {
+  position: relative;
+  width: 100%;
+}
+/* line 55, ../sass/screen.scss */
+#mainContent #outerContent #content .sidebar #logo img {
+  width: 90%;
+}
+/* line 60, ../sass/screen.scss */
+#mainContent #outerContent #content .sidebar .row {
+  margin: 10px 0;
+}
+/* line 62, ../sass/screen.scss */
+#mainContent #outerContent #content .sidebar .row label {
+  display: block;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+/* line 66, ../sass/screen.scss */
+#mainContent #outerContent #content .sidebar .row label small {
+  font-size: 10px;
+  color: palegoldenrod;
+  text-transform: lowercase;
+}
+/* line 72, ../sass/screen.scss */
+#mainContent #outerContent #content .sidebar .row input {
+  width: 90%;
+  background: #ebebeb;
+  border: 1px solid #ccc;
+  padding: 4px;
+  margin: 2px 0;
+}
+/* line 81, ../sass/screen.scss */
+#mainContent #outerContent #content .logs {
+  background: none repeat scroll 0 0 #666666;
+  color: #E3CC3A;
+  float: right;
+  font-family: monospace;
+  font-weight: 100;
+  height: 35%;
+  overflow: hidden;
+  padding: 1%;
+  width: 70%;
+  bottom: 0;
+  position: relative;
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+/* line 95, ../sass/screen.scss */
+#mainContent #outerContent #content .logs .logentry {
+  height: 95%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  width: 100%;
+}
+/* line 100, ../sass/screen.scss */
+#mainContent #outerContent #content .logs .logentry li {
+  margin: 2px 0;
+}
+/* line 102, ../sass/screen.scss */
+#mainContent #outerContent #content .logs .logentry li span.date {
+  color: tomato;
+}
+/* line 108, ../sass/screen.scss */
+#mainContent #outerContent #content .logs .clearLog {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  background: green;
+  border: 1px solid #333333;
+  color: #FFFFFF;
+  margin-top: 0;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+/* line 122, ../sass/screen.scss */
+#mainContent #outerContent #content .main {
+  width: 70%;
+  height: 65%;
+  float: right;
+  padding: 1%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  position: relative;
+}
+/* line 131, ../sass/screen.scss */
+#mainContent #outerContent #content .main .deviceList .device {
+  float: left;
+  margin: 5px;
+  text-align: center;
+}
+/* line 135, ../sass/screen.scss */
+#mainContent #outerContent #content .main .deviceList .device span {
+  display: block;
+  font-size: 14px;
+  text-transform: uppercase;
+  margin: 3px 0;
+}
+/* line 141, ../sass/screen.scss */
+#mainContent #outerContent #content .main .deviceList .device a {
+  color: #E7CE4A;
+  font-size: 12px;
+  text-decoration: none;
+}
+/* line 147, ../sass/screen.scss */
+#mainContent #outerContent #content .main .deviceList .device .submenu {
+  background: none repeat scroll 0 0 #FFFFFF;
+  border: 1px solid;
+  padding: 5px;
+  position: absolute;
+  text-align: left;
+  width: 150px;
+  box-shadow: 1px 0 10px #000000;
+}
+/* line 155, ../sass/screen.scss */
+#mainContent #outerContent #content .main .deviceList .device .submenu a {
+  color: #333;
+  font-size: 12px;
+  text-decoration: none;
+  display: block;
+  width: 100%;
+  line-height: 18px;
+}

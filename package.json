@@ -1,0 +1,34 @@
+{
+  "name": "duckcast",
+  "version": "0.0.1",
+  "description": "Stream sites to browser",
+  "scripts": {
+    "start": "node duckcast.js"
+  },
+  "config": {
+     "port": "3800"
+  },
+  "main": "./duckcast.js",
+  "directories": {
+    "assets": "assets"
+  },
+  "dependencies": {
+    "express":"*",
+    "ejs": "*",
+    "request":"2.20.0",
+    "socket.io":"0.9.16",
+    "underscore":"1.5.2",
+    "underscore.string":"*",
+    "messenger":"0.0.9"
+  },
+  "author": {
+    "name": "Vivid Planet Software GmbH",
+    "email": "office@vivid-planet.com",
+    "url": "http://vivid-planet.com"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=0.10.x",
+    "npm": ">=1.1.65"
+  }
+}
