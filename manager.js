@@ -12,11 +12,11 @@ var express = require('express')
 
   _.mixin(_s.exports());
 
-var messageServer = messenger.createListener(3802)
-    , messageClient = messenger.createSpeaker(3803)
-    , config = fs.readFileSync('./settings.json', 'utf8');
-
+var config = fs.readFileSync('./settings.json', 'utf8');
 config = JSON.parse(config);
+
+var messageServer = messenger.createListener(config.messengerPortOne)
+    , messageClient = messenger.createSpeaker(config.messengerPortTwo);
 
 app.configure(function(){
     app.set('view engine', 'ejs');
@@ -29,23 +29,6 @@ app.configure(function(){
     app.use(express.cookieParser());
     app.use(express.bodyParser({ keepExtensions: true, uploadDir: __dirname+'/temp' }));
 })
-
-io.configure(function(){
-  io.enable('browser client etag');
-    io.set('transports', [
-    'websocket'
-  , 'flashsocket'
-  , 'htmlfile'
-  , 'xhr-polling'
-  , 'jsonp-polling'
-  ]);
-  io.set('log level', 2);
-  io.set('authorization', function (handshakeData, callback) {
-      handshakeData.type = 'testling';
-      callback(null, true);
-  })
-});
-
 
 io.sockets.on('connection', function (socket) {
 
@@ -113,7 +96,6 @@ app.post('/setSite', function(req, res){
     var urlObject = url.parse(req.body.url);
     config.site = urlObject.protocol+'//'+urlObject.hostname;
     config.lastRequest = urlObject.href;
-    console.log(config);
     fs.writeFile('./settings.json', JSON.stringify(config), function(err){
          if(!err) {
                 messageClient.shout('changedSettings', config);

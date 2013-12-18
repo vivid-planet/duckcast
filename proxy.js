@@ -12,12 +12,13 @@ var express = require('express')
 
 _.mixin(_s.exports());
 
-var messageClient = messenger.createSpeaker(3802)
-  , messageServer = messenger.createListener(3803)
-  , config = fs.readFileSync('./settings.json', 'utf8');
-
+var config = fs.readFileSync('./settings.json', 'utf8');
 config = JSON.parse(config);
-config.domain = config.domain ? config.domain : os.hostname();
+
+var messageClient = messenger.createSpeaker(config.messengerPortOne)
+  , messageServer = messenger.createListener(config.messengerPortTwo);
+
+config.domain = (config.domain && config.domain !== null) ? config.domain : os.hostname();
 
 app.setMaxListeners(1000);
 server.setMaxListeners(1000);
@@ -183,6 +184,9 @@ messageServer.on('fetchDevices', function(m, data){
 messageServer.on('changedSettings', function(m, data){
    config = null;
    config = data;
+   if(!config.domain || config.domain === null) {
+      config.domain = os.hostname();
+   }
    io.sockets.emit('changedSettings', config);
    io.sockets.emit('log', 'INFO: Settings changed');
 })
