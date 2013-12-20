@@ -88,8 +88,10 @@ io.sockets.on('connection', function (socket) {
 
 
     var connectType = getDeviceTitle(socket.handshake.headers['user-agent']);
-    _.extend(connectType, {id: socket.id});    
-    messageClient.shout('devices', {type: 'create', data: connectType});
+    if(connectType && connectType !== null) {
+        _.extend(connectType, {id: socket.id});    
+        messageClient.shout('devices', {type: 'create', data: connectType});
+    }
 
     socket.on('disconnect', function(){
         console.log(socket.id);
@@ -192,7 +194,6 @@ messageServer.on('changedSettings', function(m, data){
 })
 
 messageServer.on('manageDevice', function(m, data){
-  console.log('manageDevice', data.id);
   io.sockets.socket(data.id).emit('manage', data);
 })
 
