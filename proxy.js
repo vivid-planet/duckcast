@@ -20,7 +20,7 @@ config = JSON.parse(config);
 var messageClient = messenger.createSpeaker(config.messengerPortOne)
   , messageServer = messenger.createListener(config.messengerPortTwo);
 
-config.domain = (config.domain && config.domain !== null) ? config.domain : os.hostname();
+config.domain = os.hostname();
 
 app.setMaxListeners(1000);
 server.setMaxListeners(1000);
@@ -75,7 +75,7 @@ function getDeviceTitle(userAgent) {
 
 io.sockets.on('connection', function (socket) {
 
-    socket.emit('welcome', {id: socket.id, site: config.site, domain: config.domain, port: config.proxyPort});
+    socket.emit('welcome', {id: socket.id, site: config.site, port: config.proxyPort});
 
     socket.on('manipulateFrame', function(req){
         socket.broadcast.emit('manipulate', req);
@@ -125,7 +125,7 @@ app.get('/*', function(req, res, next){
     
         var p = config.lastRequest ? config.lastRequest : config.site;
     
-        res.redirect('http://'+config.domain+':'+config.proxyPort+'/'+p);
+        res.redirect('/'+p);
     
     } else if(!_(req.path).startsWith('/http')) {
     
@@ -141,9 +141,9 @@ app.get('/*', function(req, res, next){
 
         if(parseUrl.hostname !== activeUrl.hostname) {
           if(config.lastRequest && config.lastRequest !== null) {
-            return res.redirect('http://'+config.domain+':'+config.proxyPort+'/'+config.lastRequest);
+            return res.redirect('/'+config.lastRequest);
           } else {
-            return res.redirect('http://'+config.domain+':'+config.proxyPort+'/');
+            return res.redirect('/');
           }
         }
 
@@ -187,9 +187,8 @@ messageServer.on('fetchDevices', function(m, data){
 messageServer.on('changedSettings', function(m, data){
    config = null;
    config = data;
-   if(!config.domain || config.domain === null) {
-      config.domain = os.hostname();
-   }
+   config.domain = os.hostname();
+   
    fs.write(logFile, new Date()+"LOCATION: proxy.js | Settings changed "+JSON.stringify(config)+"\n");
    io.sockets.emit('changedSettings', config);
    io.sockets.emit('log', 'INFO: Settings changed');

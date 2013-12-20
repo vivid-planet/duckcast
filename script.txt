@@ -73,8 +73,8 @@ function determinDevice() {
             window.socket.on('welcome', function(data){
                 App.site = data.site;
                 App.id = data.id;
-                App.domain = 'http://'+data.domain;
-                App.port = data.port;
+                App.domain = 'http://'+window.location.hostname;
+                App.port = window.location.port;
             })
 
             window.socket.on('error', function(){
@@ -92,7 +92,7 @@ function determinDevice() {
 
             window.socket.on('changedSettings', function(data){
                 var site = data.lastRequest ? data.lastRequest : data.site;
-                App.domain = 'http://'+data.domain;
+                App.domain = 'http://'+window.location.hostname;
                 App.port = data.proxyPort;
                 App.site = data.site;
                 window.location.assign(App.domain+':'+App.port+'/'+App.site);
