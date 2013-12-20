@@ -271,7 +271,6 @@ function determinDevice() {
 
             vivid(window).on('beforeunload', function(event){
                 if(!App.isAnchor) {
-                    console.log(event);
                     socket.emit('reloadSite');
                 }
             })
@@ -281,7 +280,6 @@ function determinDevice() {
                 $(styleSheets).each(function(i, stylesheet){
                     App.styleSheets.push($(stylesheet).attr('href'));
                 })
-                console.log(App);
             })
 
             
