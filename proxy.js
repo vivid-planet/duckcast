@@ -10,6 +10,8 @@ var express = require('express')
   , messenger = require('messenger')
   , request = require('request');
 
+var logFile = fs.openSync('./duckLog.log','a');
+
 _.mixin(_s.exports());
 
 var config = fs.readFileSync('./settings.json', 'utf8');
@@ -94,7 +96,6 @@ io.sockets.on('connection', function (socket) {
     }
 
     socket.on('disconnect', function(){
-        console.log(socket.id);
         messageClient.shout('devices', {
           type: 'delete'
           , socketUri: 'duckcast/'+socket.id+':delete'
@@ -153,7 +154,7 @@ app.get('/*', function(req, res, next){
         var toWrite = _.omit(config, 'domain');
         fs.writeFile('./settings.json', JSON.stringify(toWrite), function(err){
             if(err){
-                console.error(err);
+                fs.write(logFile, new Date()+"LOCATION: proxy.js | "+err.toString()+"\n");
             }
         })
          
@@ -189,6 +190,7 @@ messageServer.on('changedSettings', function(m, data){
    if(!config.domain || config.domain === null) {
       config.domain = os.hostname();
    }
+   fs.write(logFile, new Date()+"LOCATION: proxy.js | Settings changed "+JSON.stringify(config)+"\n");
    io.sockets.emit('changedSettings', config);
    io.sockets.emit('log', 'INFO: Settings changed');
 })
@@ -199,6 +201,7 @@ messageServer.on('manageDevice', function(m, data){
 
 messageServer.on('restart', function(){
   io.sockets.emit('log', 'BROADCAST: Manager System is going to restart in 10 seconds on port '+config.mangerPort);
+  fs.write(logFile, new Date()+"LOCATION: proxy.js | Received SIGHUP on line 202\n");
   setTimeout(function(){
      process.kill(process.pid,'SIGHUP');
   }, 10000);
@@ -210,7 +213,7 @@ messageServer.on('updateStylesheets', function() {
 })
 
 process.on('uncaughtException', function (err) {
-  console.error(err);
+  fs.write(logFile, new Date()+"LOCATION: proxy.js | Uncaught Exception:"+err.message.toString()+"\n");
   if(err.code !== "ECONNRESET" && err.code !== 'ENOTFOUND' && err.code !== 'ESOCKETTIMEDOUT'){
     process.exit(1)
   } 
