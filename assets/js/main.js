@@ -238,8 +238,8 @@ var Content = Backbone.View.extend({
 App.content = new Content();
 
 window.socket.on('lastRequest', function(url){
-    var target = App.content.$el.find('input[name="lastRequest"]');
-    $(target).val(url);
+    var target = App.content.$el.find('p.deepLink');
+    $(target).text(url);
 })
 
 window.socket.on('log', function(message){
