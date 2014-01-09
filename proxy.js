@@ -58,7 +58,7 @@ function getDeviceTitle(userAgent) {
     }
     if(/iphone/i.test(userAgent)) {
         deviceType = {type: 'iphone', title: 'Apple Iphone'};
-    }    
+    }
     if(/ipod/i.test(userAgent)) {
         deviceType = {type: 'ipod', title: 'Apple Ipod'};
     }
@@ -88,13 +88,13 @@ io.sockets.on('connection', function (socket) {
         setTimeout(function(){
             io.sockets.emit('navigate', data);
         }, 800)
-        
+
     })
 
 
     var connectType = getDeviceTitle(socket.handshake.headers['user-agent']);
     if(connectType && connectType !== null) {
-        _.extend(connectType, {id: socket.id});    
+        _.extend(connectType, {id: socket.id});
         messageClient.shout('devices', {type: 'create', data: connectType});
     }
 
@@ -113,32 +113,48 @@ io.sockets.on('connection', function (socket) {
         var styleSheetList = _.map(data, function(doc){
            return url.parse(doc);
         })
-        styleSheetList = _.filter(styleSheetList, function(stylesheet){ 
+        styleSheetList = _.filter(styleSheetList, function(stylesheet){
             return stylesheet.host === null;
         })
         io.sockets.emit('changeStylesheet', styleSheetList);
     })
 })
 
+function watcherUpdate(args) {
+  if(_(args.file).endsWith('.scss') || _(args.file).endsWith('.css') || _(args.file).endsWith('.tpl') || _(args.file).endsWith('.html') || _(args.file).endsWith('.handlebars')) {
+    io.sockets.emit('log', 'BROADCAST WATCHER UPDATE: Server-Stylesheet updated');
+    console.log(args.file);
+    setTimeout(function(){
+      io.sockets.emit('getStylesheet');
+    }, 2000)
+  } else {
+    console.log('Web File '+args.file+' changed, no automatic update..');
+  }
+}
+
 app.get('/*', function(req, res, next){
 
     messageClient.shout('log', 'Requested: '+req.path);
 
+    if(req.path && req.path === '/watcher') {
+      watcherUpdate(req.query);
+      res.send(200);
+    } else {
+
     if(!req.path || req.path === '/') {
-    
+
         var p = config.lastRequest ? config.lastRequest : config.site;
-    
+
         res.redirect('/'+p);
-    
+
     } else if(!_(req.path).startsWith('/http')) {
-    
-      
+
         request(config.site+req.path).pipe(res);
-    
+
     } else if(_(req.path).startsWith('/http')) {
-        
-        var path = _(req.path).strRight('/');
-        
+
+        var path = _(req.url).strRight('/');
+
         var parseUrl = url.parse(path);
         var activeUrl = url.parse(config.site);
 
@@ -151,7 +167,7 @@ app.get('/*', function(req, res, next){
         }
 
         config.lastRequest = path;
-          
+
         messageClient.shout('lastRequest', path);
 
         var toWrite = _.omit(config, 'domain');
@@ -173,8 +189,12 @@ app.get('/*', function(req, res, next){
             }
         })
     }
+  }
 })
 
+app.post('/*', function(req, res){
+    request.post(config.site+req.path).pipe(res);
+})
 
 messageServer.on('fetchDevices', function(m, data){
     var obj = [];
@@ -191,7 +211,7 @@ messageServer.on('changedSettings', function(m, data){
    config = null;
    config = data;
    config.domain = os.hostname();
-   
+
    fs.write(logFile, new Date()+"LOCATION: proxy.js | Settings changed "+JSON.stringify(config)+"\n");
    io.sockets.emit('changedSettings', config);
    io.sockets.emit('log', 'INFO: Settings changed');
@@ -218,7 +238,7 @@ process.on('uncaughtException', function (err) {
   fs.write(logFile, new Date()+"LOCATION: proxy.js | Uncaught Exception:"+err.message.toString()+"\n");
   if(err.code !== "ECONNRESET" && err.code !== 'ENOTFOUND' && err.code !== 'ESOCKETTIMEDOUT'){
     process.exit(1)
-  } 
+  }
 
   if(err.code === 'ECONNRESET') {
     io.sockets.emit('log', err.toString());
