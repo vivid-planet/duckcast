@@ -134,7 +134,9 @@ function watcherUpdate(args) {
 
 app.get('/*', function(req, res, next){
 
-    messageClient.shout('log', 'Requested: '+req.path);
+    var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+
+    messageClient.shout('log', ip+': '+req.path);
 
     if(req.path && req.path === '/watcher') {
       watcherUpdate(req.query);
