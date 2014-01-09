@@ -160,9 +160,9 @@ app.get('/*', function(req, res, next){
                 fs.write(logFile, new Date()+"LOCATION: proxy.js | "+err.toString()+"\n");
             }
         })
-         
+
         request(path, function(error, response, body){
-            var cleanHtml = !error ? _.clean(response.body) : null;
+            var cleanHtml = !error ? response.body : null;
             if(!cleanHtml || !cleanHtml.match('<head>')) {
               res.render(__dirname+'/assets/views/backupSite.ejs', {message: error ? error : response.body }, function(err, html){
                 res.send(response.statusCode).send(html);
