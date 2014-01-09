@@ -72,6 +72,9 @@ function getDeviceTitle(userAgent) {
     return deviceType;
 }
 
+io.configure(function(){
+  io.set('log level', 1);
+})
 
 io.sockets.on('connection', function (socket) {
 
