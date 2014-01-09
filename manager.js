@@ -30,6 +30,10 @@ app.configure(function(){
     app.use(express.bodyParser({ keepExtensions: true, uploadDir: __dirname+'/temp' }));
 })
 
+io.configure(function(){
+  io.set('log level', 1);
+})
+
 io.sockets.on('connection', function (socket) {
 
     socket.emit('welcome', config);
