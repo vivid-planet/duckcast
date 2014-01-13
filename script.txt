@@ -98,6 +98,16 @@ function determinDevice() {
                 window.location.assign(App.domain+':'+App.port+'/'+App.site);
             })
 
+            window.socket.on('changedPort', function(data){
+                var site = data.lastRequest ? data.lastRequest : data.site;
+                App.domain = 'http://'+window.location.hostname;
+                App.port = data.proxyPort;
+                App.site = data.site;
+                setTimeout(function(){
+                    window.location.assign(App.domain+':'+App.port+'/'+App.site);
+                }, 20000);
+            })
+
             window.socket.on('manage', function(data){
                 switch(data.action) {
                     case "identify":

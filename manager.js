@@ -110,6 +110,25 @@ app.post('/setSite', function(req, res){
     })
 })
 
+app.post('/setPorts', function(req, res){
+    var restartManager = false;
+    if(config.managerPort !== req.body.managerPort) {
+      restartManager = true;
+    }
+    _.extend(config, req.body);
+    fs.writeFile('./settings.json', JSON.stringify(config), function(err){
+         if(!err) {
+                messageClient.shout('changedPort', config);
+                res.send('Site settings changed');
+                if(restartManager) {
+                  process.exit(1);
+                }
+         } else {
+             res.send(err.toString());
+         }
+    })
+})
+
 
 process.on('uncaughtException', function (err) {
   console.error(err);

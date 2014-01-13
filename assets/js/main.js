@@ -128,7 +128,7 @@ var Content = Backbone.View.extend({
     , collection: App.duckcast
     , events: {
         'submit #setSite': 'setDuckcastSite',
-        'submit #setDomain': 'setDomainSettings',
+        'submit #setDomain': 'setPortSettings',
         'click .queryDevice': 'queryDevice',
         'click .deviceSubmenu': 'deviceContextMenu',
         'click .restart': 'restartProcess',
@@ -191,9 +191,23 @@ var Content = Backbone.View.extend({
             $(target).prepend($(html).slideDown());
         })
     }
-    , setDomainSettings: function(event) {
+    , setPortSettings: function(event) {
         event.preventDefault();
         var values = $(event.currentTarget).serializeObject();
+        if(values.proxyPort === '5001' || values.proxyPort === '5002') return alert('The ProxyPort provided is reserved by the system, please set to another port');
+        if(values.managerPort === '5001' || values.managerPort === '5002') return alert('The ManagerPort provided is reserved by the system, please set to another port');
+        if(values.proxyPort === values.managerPort) return alert('Proxy and Manager Port cannot be the same.. please change');
+
+        var request = $.ajax({
+            url: '/setPorts'
+            , data: values
+            , method: 'POST'
+        })
+        request.done(function(res, status, xhr){
+            var html = logEntry({date: new Date(), message: 'Ports changed'});
+            var target = $('ul.logentry');
+            $(target).prepend($(html).slideDown());
+        })
     }
     , queryDevice: function(event) {
         event.preventDefault();

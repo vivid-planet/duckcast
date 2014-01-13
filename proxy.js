@@ -209,6 +209,13 @@ messageServer.on('fetchDevices', function(m, data){
     m.reply({devices: _.flatten(connectedDevices)});
 })
 
+messageServer.on('changedPort', function(m, data){
+  io.sockets.emit('changedPort', data);
+  setTimeout(function(){
+     process.kill(process.pid,'SIGHUP');
+  }, 10000);
+})
+
 messageServer.on('changedSettings', function(m, data){
    config = null;
    config = data;
