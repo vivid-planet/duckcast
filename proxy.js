@@ -216,7 +216,6 @@ messageServer.on('changedSettings', function(m, data){
 
    fs.write(logFile, new Date()+"LOCATION: proxy.js | Settings changed "+JSON.stringify(config)+"\n");
    io.sockets.emit('changedSettings', config);
-   io.sockets.emit('log', 'INFO: Settings changed');
 })
 
 messageServer.on('manageDevice', function(m, data){
@@ -238,7 +237,6 @@ messageServer.on('updateStylesheets', function() {
 
 process.on('uncaughtException', function (err) {
   fs.write(logFile, new Date()+"LOCATION: proxy.js | Uncaught Exception:"+err.message.toString()+"\n");
-  console.log(logFile, new Date()+"LOCATION: proxy.js | Uncaught Exception:"+err.message.toString()+"\n");
   if(err.code !== "ECONNRESET" && err.code !== 'ENOTFOUND' && err.code !== 'ESOCKETTIMEDOUT'){
     process.exit(1)
   }
