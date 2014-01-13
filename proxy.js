@@ -121,14 +121,14 @@ io.sockets.on('connection', function (socket) {
 })
 
 function watcherUpdate(args) {
-  if(_(args.file).endsWith('.scss') || _(args.file).endsWith('.css') || _(args.file).endsWith('.tpl') || _(args.file).endsWith('.html') || _(args.file).endsWith('.handlebars')) {
+  if(args.cacheType) {
     io.sockets.emit('log', 'BROADCAST WATCHER UPDATE: Server-Stylesheet updated');
-    console.log(args.file);
+    console.log(args);
     setTimeout(function(){
       io.sockets.emit('getStylesheet');
     }, 2000)
   } else {
-    console.log('Web File '+args.file+' changed, no automatic update..');
+    console.log('Web changed, no automatic update..');
   }
 }
 
