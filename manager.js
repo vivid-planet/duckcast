@@ -98,7 +98,7 @@ app.get('/', function(req, res){
 
 app.post('/setSite', function(req, res){
     var urlObject = url.parse(req.body.url);
-    config.site = urlObject.protocol+'//'+urlObject.hostname;
+    config.site = req.body.url;
     config.lastRequest = urlObject.href;
     fs.writeFile('./settings.json', JSON.stringify(config), function(err){
          if(!err) {
@@ -115,7 +115,7 @@ process.on('uncaughtException', function (err) {
   console.error(err);
   if(err.code !== "ECONNRESET" && err.code !== 'ENOTFOUND' && err.code !== 'ESOCKETTIMEDOUT'){
     process.exit(1)
-  } 
+  }
 
   if(err.code === 'ECONNRESET') {
     io.sockets.emit('log', err.toString());
