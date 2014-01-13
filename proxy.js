@@ -183,11 +183,11 @@ app.get('/*', function(req, res, next){
             var cleanHtml = !error ? response.body : null;
             if(!cleanHtml || !cleanHtml.match('<head>')) {
               res.render(__dirname+'/assets/views/backupSite.ejs', {message: error ? error : response.body }, function(err, html){
-                res.send(200).send(html);
+                res.status((response && _.has(response, 'statusCode')) ? response.statusCode : 404).send(html);
               });
             } else {
               var cc = cleanHtml.replace('<head>', duckScript);
-              res.status(200).send(cc);
+              res.status(response.statusCode).send(cc);
             }
         })
     }
@@ -238,6 +238,7 @@ messageServer.on('updateStylesheets', function() {
 
 process.on('uncaughtException', function (err) {
   fs.write(logFile, new Date()+"LOCATION: proxy.js | Uncaught Exception:"+err.message.toString()+"\n");
+  console.log(logFile, new Date()+"LOCATION: proxy.js | Uncaught Exception:"+err.message.toString()+"\n");
   if(err.code !== "ECONNRESET" && err.code !== 'ENOTFOUND' && err.code !== 'ESOCKETTIMEDOUT'){
     process.exit(1)
   }
