@@ -183,11 +183,11 @@ app.get('/*', function(req, res, next){
             var cleanHtml = !error ? response.body : null;
             if(!cleanHtml || !cleanHtml.match('<head>')) {
               res.render(__dirname+'/assets/views/backupSite.ejs', {message: error ? error : response.body }, function(err, html){
-                res.send(response.statusCode).send(html);
+                res.send(200).send(html);
               });
             } else {
               var cc = cleanHtml.replace('<head>', duckScript);
-              res.status(response.statusCode).send(cc);
+              res.status(200).send(cc);
             }
         })
     }
