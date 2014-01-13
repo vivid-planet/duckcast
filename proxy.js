@@ -26,8 +26,6 @@ app.setMaxListeners(1000);
 server.setMaxListeners(1000);
 server.listen(config.proxyPort);
 
-var request = request.defaults({timeout: 30000}) // CONFIG TO TIMEOUT REQUEST
-
 app.configure(function(){
     app.use(express.favicon());
     app.use(express.compress());
