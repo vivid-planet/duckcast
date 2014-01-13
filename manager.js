@@ -98,8 +98,8 @@ app.get('/', function(req, res){
 
 app.post('/setSite', function(req, res){
     var urlObject = url.parse(req.body.url);
-    config.site = req.body.url;
-    config.lastRequest = urlObject.href;
+    config.site = urlObject.protocol+'//'+urlObject.hostname;
+    config.lastRequest = req.body.url;
     fs.writeFile('./settings.json', JSON.stringify(config), function(err){
          if(!err) {
                 messageClient.shout('changedSettings', config);
