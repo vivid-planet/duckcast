@@ -178,6 +178,8 @@ var Content = Backbone.View.extend({
     , setDuckcastSite: function(event) {
         event.preventDefault();
         var query = $(event.target).serializeArray();
+        if(!query[0].value.match(/(http|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/g)) return alert('Not a valid url');
+
         var request = $.ajax({
             url: '/setSite'
             , data: {url: query[0].value}
@@ -187,7 +189,7 @@ var Content = Backbone.View.extend({
             var html = logEntry({date: new Date(), message: 'Site set to: '+query[0].value});
             var target = $('ul.logentry');
             $(target).prepend($(html).slideDown());
-        })        
+        })
     }
     , setDomainSettings: function(event) {
         event.preventDefault();
