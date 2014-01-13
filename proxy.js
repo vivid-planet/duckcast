@@ -123,12 +123,7 @@ io.sockets.on('connection', function (socket) {
 function watcherUpdate(args) {
   if(args.cacheType) {
     io.sockets.emit('log', 'BROADCAST WATCHER UPDATE: Server-Stylesheet updated');
-    console.log(args);
-    setTimeout(function(){
-      io.sockets.emit('getStylesheet');
-    }, 2000)
-  } else {
-    console.log('Web changed, no automatic update..');
+    io.sockets.emit('getStylesheet');
   }
 }
 
