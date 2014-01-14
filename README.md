@@ -14,3 +14,6 @@ Requires Node ~0.10.x and NPM (Node Package Manager)
 ##Use Forever
     sudo npm install forever -g
     forever start -w duckcast.js
+
+#Reload Stylesheets on change foreign script / site call 
+    http://duckcastdomain.local/watcher
