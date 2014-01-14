@@ -12,6 +12,8 @@ var express = require('express')
 
 var logFile = fs.openSync('./duckLog.log','a');
 
+$ = require('jQuery')
+
 _.mixin(_s.exports());
 
 var config = fs.readFileSync('./settings.json', 'utf8');
@@ -121,7 +123,32 @@ io.sockets.on('connection', function (socket) {
 function watcherUpdate(args) {
   if(args.cacheType) {
     io.sockets.emit('log', 'BROADCAST WATCHER UPDATE: Server-Stylesheet updated');
-    io.sockets.emit('getStylesheet');
+    request(config.site, function(error, response, body){
+      if(body) {
+        var doc = $(body);
+        var styles = $(doc).find('link[rel="stylesheet"]')
+        if(styles && styles.length) {
+          var styleLinks = [];
+          _.map(styles, function(style){
+            var uri = $(style).attr('href');
+            if(!_(uri).startsWith('http')) {
+               styleLinks.push(uri);
+            }
+          })
+          var styleCount = _.size(styleLinks);
+          var i = 0;
+          _.each(styleLinks, function(styleLink){
+            request(config.site+styleLink, function(err, styleResponse, styleBody){
+              if(styleResponse || err) i++;
+
+              if(i >= styleCount) {
+                io.sockets.emit('getStylesheet');
+              }
+            })
+          })
+        }
+      }
+    })
   }
 }
 
