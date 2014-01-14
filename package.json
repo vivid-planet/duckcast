@@ -1,6 +1,6 @@
 {
   "name": "duckcast",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Stream sites to browser",
   "scripts": {
     "start": "node duckcast.js"
@@ -19,7 +19,10 @@
     "socket.io":"0.9.16",
     "underscore":"1.5.2",
     "underscore.string":"*",
-    "messenger":"0.0.9"
+    "messenger":"0.0.9",
+    "jQuery":"*",
+    "jsdom":"*",
+    "xmlhttprequest":"*"
   },
   "author": {
     "name": "Vivid Planet Software GmbH",
