@@ -46,7 +46,7 @@ function determinDevice() {
     }
     if(/iphone/i.test(navigator.userAgent)) {
         deviceType = {type: 'iphone', title: 'Apple Iphone', mobile:true};
-    }    
+    }
     if(/ipod/i.test(navigator.userAgent)) {
         deviceType = {type: 'ipod', title: 'Apple Ipod', mobile:true};
     }
@@ -218,7 +218,7 @@ function determinDevice() {
                     default:
                         return false;
                 }
-                
+
             })
 
             window.socket.on('reconnect', function(){
@@ -230,6 +230,8 @@ function determinDevice() {
                 e.stopPropagation();
                 App.isAnchor = true;
                 var href = $(e.target).attr('href');
+                if(href === '#') return false;
+
                 socket.emit('navigateWindow', App.site+href);
             })
 
@@ -243,7 +245,7 @@ function determinDevice() {
                     , value: data
                     , type: $(event.target).get(0).tagName.toLowerCase()
                     , tagType: $(event.target).attr('type')
-                };            
+                };
                 socket.emit('manipulateFrame', toSubmit);
             }
 
@@ -292,7 +294,7 @@ function determinDevice() {
                 })
             })
 
-            
-            
+
+
         })(jQuery)
     </script>
