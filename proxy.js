@@ -120,35 +120,44 @@ io.sockets.on('connection', function (socket) {
     })
 })
 
-function watcherUpdate(args) {
-  if(args.cacheType) {
-    io.sockets.emit('log', 'BROADCAST WATCHER UPDATE: Server-Stylesheet updated');
-    request(config.site, function(error, response, body){
-      if(body) {
-        var doc = $(body);
-        var styles = $(doc).find('link[rel="stylesheet"]')
-        if(styles && styles.length) {
-          var styleLinks = [];
-          _.map(styles, function(style){
-            var uri = $(style).attr('href');
-            if(!_(uri).startsWith('http')) {
-               styleLinks.push(uri);
-            }
-          })
-          var styleCount = _.size(styleLinks);
-          var i = 0;
-          _.each(styleLinks, function(styleLink){
-            request(config.site+styleLink, function(err, styleResponse, styleBody){
-              if(styleResponse || err) i++;
+var watchTimer = null;
 
-              if(i >= styleCount) {
-                io.sockets.emit('getStylesheet');
+function watcherUpdate(args) {
+
+  if(args.cacheType && !watchTimer) {
+    watchTimer = setTimeout(function(){
+      io.sockets.emit('log', 'BROADCAST WATCHER UPDATE: Server-Stylesheet updated');
+      request(config.site, function(error, response, body){
+        if(body) {
+          var doc = $(body);
+          var styles = $(doc).find('link[rel="stylesheet"]')
+          if(styles && styles.length) {
+            var styleLinks = [];
+            _.map(styles, function(style){
+              var uri = $(style).attr('href');
+              if(!_(uri).startsWith('http')) {
+                 styleLinks.push(uri);
               }
             })
-          })
+            var styleCount = _.size(styleLinks);
+            var i = 0;
+            _.each(styleLinks, function(styleLink){
+              request(config.site+styleLink, function(err, styleResponse, styleBody){
+                if(styleResponse || err) i++;
+
+                if(i >= styleCount) {
+                  io.sockets.emit('getStylesheet');
+                }
+              })
+            })
+          }
         }
-      }
-    })
+      })
+    }, 2000);
+  } else {
+    clearTimeout(watchTimer);
+    watchTimer = null;
+    watcherUpdate(args);
   }
 }
 
