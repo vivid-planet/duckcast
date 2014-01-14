@@ -144,7 +144,7 @@ app.get('/*', function(req, res, next){
 
     } else if(!_(req.path).startsWith('/http')) {
 
-        request(config.site+req.path).pipe(res);
+        request(config.site+req.url).pipe(res);
 
     } else if(_(req.path).startsWith('/http')) {
 
@@ -171,7 +171,6 @@ app.get('/*', function(req, res, next){
                 fs.write(logFile, new Date()+"LOCATION: proxy.js | "+err.toString()+"\n");
             }
         })
-
         request(path, function(error, response, body){
             var cleanHtml = !error ? response.body : null;
             if(!cleanHtml || !cleanHtml.match('<head>')) {
