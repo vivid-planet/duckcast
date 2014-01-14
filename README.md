@@ -15,5 +15,9 @@ Requires Node ~0.10.x and NPM (Node Package Manager)
     sudo npm install forever -g
     forever start -w duckcast.js
 
-#Reload Stylesheets on change foreign script / site call 
+###To reload stylesheets call
     http://duckcastdomain.local/watcher
+
+###Todo:
+- Listener to reload javascript on change
+- Better documentation 
