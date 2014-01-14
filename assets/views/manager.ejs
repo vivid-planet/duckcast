@@ -31,26 +31,6 @@
                             </div>
                         </form>
                         <hr>
-                        <h4>Domain / Port Settings</h4>
-                        <form id="setDomain">
-                            <div class="row">
-                                <label>Public (Proxy) Port</label>
-                                <input name="proxyPort" value="<%= content.proxyPort %>">
-                            </div>
-                            <div class="row">
-                                <label>Manager (Admin) Port</label>
-                                <input name="managerPort" value="<%= content.managerPort %>">
-                            </div>
-                            <div class="row">
-                                <p class="info">
-                                    Important: Changes here take up to 20 seconds to apply! (Manager port must updated manualy in browser!)
-                                </p>
-                            </div>
-                            <div class="row">
-                                <button class="submitButton" type="submit">Save</button>
-                            </div>
-                        </form>
-                        <hr>
                         <div class="row">
                             <label>Active Deep Link</label>
                             <p class="deepLink"><%= content.lastRequest %></p>
