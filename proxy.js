@@ -143,6 +143,7 @@ function watcherUpdate(args) {
 
             function requestStyleSheets(link, callback) {
                 request(config.site+link, function(err, styleResponse, styleBody){
+                    callback(null, styleResponse);
                 })
             }
 
@@ -172,7 +173,7 @@ app.get('/*', function(req, res, next){
       watcherUpdate(req.query);
       res.send(200);
     } else {
-
+        
     if(!req.path || req.path === '/') {
 
         var p = config.lastRequest ? config.lastRequest : config.site;
