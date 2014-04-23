@@ -22,6 +22,7 @@
     "messenger":"0.0.9",
     "jQuery":"*",
     "jsdom":"*",
+    "async":"*",
     "xmlhttprequest":"*"
   },
   "author": {

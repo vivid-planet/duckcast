@@ -8,6 +8,7 @@ var express = require('express')
   , url = require('url')
   , os = require('os')
   , messenger = require('messenger')
+  , async = require('async')
   , request = require('request');
 
 var logFile = fs.openSync('./duckLog.log','a');
@@ -139,16 +140,16 @@ function watcherUpdate(args) {
                  styleLinks.push(uri);
               }
             })
-            var styleCount = _.size(styleLinks);
-            var i = 0;
-            _.each(styleLinks, function(styleLink){
-              request(config.site+styleLink, function(err, styleResponse, styleBody){
-                if(styleResponse || err) i++;
 
-                if(i >= styleCount) {
-                  io.sockets.emit('getStylesheet');
+            function requestStyleSheets(link, callback) {
+                request(config.site+link, function(err, styleResponse, styleBody){
+                })
+            }
+
+            async.map(styleLinks, requestStyleSheets, function(err, repsonse){
+                if(response && !err) {
+                    io.sockets.emit('getStylesheet');
                 }
-              })
             })
           }
         }
